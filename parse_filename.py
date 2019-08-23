@@ -25,6 +25,7 @@ class informative_filename:
         self.blue_voltage=0
         self.UV_voltage =0
         self.display_time =0
+        """the"""
 
         self.information_list = []
         self.remove_extension()
