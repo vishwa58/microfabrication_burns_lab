@@ -1,5 +1,5 @@
 import unittest
-import parse_filename as pf
+import informative_filename as pf
 
 
 
@@ -78,16 +78,70 @@ class test_extract_information(unittest.TestCase):
         self.assertEqual(12.46, testfile.UV_voltage)
         self.assertEqual(82.86, testfile.blue_voltage)
         self.assertEqual(2.15, testfile.display_time)
+    def test_extract_info_change_values(self):
+        testfile = pf.informative_filename("Exposure3_UV12.46_B82.86_T0.006.png")
+        self.assertEqual(3, testfile.slice_num)
+        self.assertEqual(12.46, testfile.UV_voltage)
 
-# class test_read_files(unittest.TestCase):
+    def test_extract_info_change_filename(self):
+        testfile = pf.informative_filename("Exposure3_UV12.46_B82.86_T0.006.png")
+        self.assertEqual(3, testfile.slice_num)
+        self.assertEqual(12.46, testfile.UV_voltage)
+        self.assertEqual(82.86, testfile.blue_voltage)
+        self.assertEqual(0.006, testfile.display_time)
+        testfile.original_filename = "Exposure2_UV1.86_B2.86_T0.15.png"
+        self.assertEqual(2, testfile.slice_num)
+        self.assertEqual(1.86, testfile.UV_voltage)
+        self.assertEqual(2.86, testfile.blue_voltage)
+        self.assertEqual(0.15, testfile.display_time)
+    def test_minimal_filename(self):
+        testfile.original_filename = "2_1.86_2.86_0.15.png"
+        self.assertEqual(2, testfile.slice_num)
+        self.assertEqual(1.86, testfile.UV_voltage)
+        self.assertEqual(2.86, testfile.blue_voltage)
+        self.assertEqual(0.15, testfile.display_time)
+    def test_missing_values(self):
+        testfile.original_filename = "2_2.86_0.15.png"
+        self.assertEqual(2, testfile.slice_num)
+        self.assertEqual(2.86, testfile.UV_voltage)
+        self.assertEqual(0.15, testfile.blue_voltage)
+        self.assertEqual(0, testfile.display_time)
+    def test_empty_string(self):
+        testfile.original_filename = ""
+        self.assertEqual(0, testfile.slice_num)
+        self.assertEqual(0, testfile.UV_voltage)
+        self.assertEqual(0, testfile.blue_voltage)
+        self.assertEqual(0, testfile.display_time)
+    def test_missing_singular(self):
+        testfile.original_filename = "2_x_2.86_0.15.png"
+        self.assertEqual(2, testfile.slice_num)
+        self.assertEqual(0, testfile.UV_voltage)
+        self.assertEqual(2.86, testfile.blue_voltage)
+        self.assertEqual(0.15, testfile.display_time)
+        
 
-#     def test_read_in(self):
-#         # 
-#         IMAGE_PATH = "Users/vishwanathan/Documents/UM-1/undergrad_research/microfabrication/mf_test_slices"
-#         newlist = pf.readfiles(IMAGE_PATH)
-#         for file in newlist:
-#             print
+class test_read_files(unittest.TestCase):
 
+    def test_read_in(self):
+        IMAGE_PATH = "/Users/vishwanathan/Documents/UM-1/undergrad_research/microfabrication/mf_test_slices"
+        newlist = pf.read_files(IMAGE_PATH)
+        for file in newlist:
+            print(file)
+        print('\n')
+    def test_read_in_parse(self):
+        IMAGE_PATH = "/Users/vishwanathan/Documents/UM-1/undergrad_research/microfabrication/mf_test_slices"
+        newlist = pf.read_files(IMAGE_PATH)
+        for file in newlist:
+            print('{} {} {} {}'.format(file.slice_num, file.UV_voltage, file.blue_voltage, file.display_time))
+        print('\n')
+    def test_read_in_manipulate(self):
+        IMAGE_PATH = "/Users/vishwanathan/Documents/UM-1/undergrad_research/microfabrication/mf_test_slices"
+        newlist = pf.read_files(IMAGE_PATH)
+        for file in newlist:
+            print(file.slice_num+ file.UV_voltage+ file.blue_voltage+ file.display_time)
+        self.assertEqual(newlist[0].slice_num, 1)
+        print('\n')
+        
 
 if __name__ == '__main__':
 
