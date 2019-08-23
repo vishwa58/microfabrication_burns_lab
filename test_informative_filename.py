@@ -51,9 +51,9 @@ class test_extract_information(unittest.TestCase):
     def test_extract_info_diff(self):
         testfile = pf.informative_filename("Exposure3_UV2_B2_T1")
         # testfile.extract_voltage()
-        self.assertEqual(3, testfile.slice_num)
-        self.assertEqual(2, testfile.UV_voltage)
-        self.assertEqual(2, testfile.blue_voltage)
+        self.assertEqual(3, testfile.information_list[0])
+        self.assertEqual(2, testfile.information_list[1])
+        self.assertEqual(2, testfile.information_list[2])
     def test_extract_info_class(self):
         testfile = pf.informative_filename("Exposure3_UV2_B2_T2.5.png")
         self.assertEqual(3, testfile.slice_num)

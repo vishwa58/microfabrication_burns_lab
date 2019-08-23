@@ -16,18 +16,16 @@ import microfabrication_constant as MFC
 
 class informative_filename:
 
-    
+
+
     def __init__(self, file):
         self.original_filename = file
-        self.extensionless_filename= ""
-
+        self.extensionless_filename= " "
         self.slice_num=0
-        self.blue_voltage=0
         self.UV_voltage =0
+        self.blue_voltage=0
         self.display_time =0
-        """the"""
-
-        self.information_list = []
+        self.information_list = [self.slice_num, self.UV_voltage, self.blue_voltage, self.display_time]
         self.remove_extension()
         self.extract_voltage()
 
@@ -46,7 +44,7 @@ class informative_filename:
         #exposure2_uv3.5_b2.3 would become ["exposure2, uv3.5, b2.3"]
         string_exposure_uv_blue_list = self.extensionless_filename.split("_")
         #This list stores slice num, UV voltage, blue voltage, and display time values
-        EUB_values = [self.slice_num,self.UV_voltage,self.blue_voltage,self.display_time]
+        EUB_values = [0,0,0,0]
         #This loops through the string_exposure_uv_blue_list and takes the numerical values and stores it in the EUB list
         for outer_index, element in enumerate(string_exposure_uv_blue_list):
             for index, c in enumerate(element):
@@ -54,10 +52,12 @@ class informative_filename:
                     EUB_values[outer_index]=(float(element[index:]))
                     break
         #Sets the member variables declared in the constructor 
-        self.slice_num=EUB_values[0]
-        self.UV_voltage=EUB_values[1]
-        self.blue_voltage=EUB_values[2]
-        self.display_time =EUB_values[3]
+        self.information_list = list(EUB_values)
+
+        # self.slice_num=EUB_values[0]
+        # self.UV_voltage=EUB_values[1]
+        # self.blue_voltage=EUB_values[2]
+        # self.display_time =EUB_values[3]
 
 
 #This function takes in a file path as an input, converts the filenames into the informative filename class, and outputs this as a list
