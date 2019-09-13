@@ -1,5 +1,5 @@
 import unittest
-import informative_filename as pf
+import microfabrication_functions as pf
 
 
 
@@ -141,6 +141,29 @@ class test_read_files(unittest.TestCase):
             print(file.slice_num+ file.UV_voltage+ file.blue_voltage+ file.display_time)
         self.assertEqual(newlist[0].slice_num, 1)
         print('\n')
+class test_write_files(unittest.TestCase):
+    
+    def insert_at_end(self, num, orig_str):
+        future_index = len(orig_str)
+        for index, x in enumerate(orig_str):
+            if (x.isdigit()):
+                future_index=index
+                break
+        new_str = orig_str[0:future_index]+ str(num)
+        return new_str 
+    def test_insert_at_end_basic(self):
+        self.assertEqual(self.insert_at_end(2.4, "exposure1.3"), "exposure2.4")
+    def test_insert_at_end_no_numbers(self):
+        self.assertEqual(self.insert_at_end(1.8, "exposure"), "exposure1.8")
+    def test_insert_at_end_no_numbers_again(self):
+        self.assertEqual(self.insert_at_end(1.8, "num"), "num1.8")
+    def test_insert_at_end_numbers(self):
+        self.assertEqual(self.insert_at_end(1.8, "num2.7867"), "num1.8")
+    def test_rewrite_filename_basic(self):
+        new_testfile = pf.informative_filename("Exposure1_UV3.2_B2.2.png")
+        new_file = new_testfile.insert_new_data(2, new_testfile.original_filename, "slice_num", ".png" )
+        self.assertEqual(new_file, "Exposure2_UV3.2_B2.2.png" )
+
         
 
 if __name__ == '__main__':

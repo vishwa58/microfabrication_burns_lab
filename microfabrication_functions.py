@@ -1,17 +1,16 @@
 #Created by Vishwa Nathan (vnathan@umich.edu)
-#This file creates a class which will take in a file name pertaining to a specific DLP image.
-#The filename will hold three pieces of information: the number of the image, the voltage for the blue light and the voltage for the UV light#
-#The class then stores each piece of information in a seperate variable which can be accessed later
+#This file creates a class which will take in a file name pertaining to a specific DLP image and contains the functions to display the images on a monitor
 
-
-#USE FORMAT "ExposureN_UVX_BY.png" (see below for which part can be changed and which must be constant)
-#In order for this class to work the filename it takes in must be saved as  EXPOSUREx_UVy_Bz.extension where NUM, UV, B and extension may be changed to anything but the values for the 
-#slice num (x) and uv voltage (y) must be at the end of NUM and UV respectively and before the underscore. Blue voltage (z) must be at the end of B, but before the extension.
 
 import os
 import microfabrication_constant as MFC
 
 
+#The class will hold three pieces of information: the number of the image, the voltage for the blue light and the voltage for the UV light#
+#The class then stores each piece of information in a seperate variable which can be accessed later
+#USE FORMAT "ExposureN_UVX_BY.png" (see below for which part can be changed and which must be constant)
+#In order for this class to work the filename it takes in must be saved as  EXPOSUREx_UVy_Bz.extension where NUM, UV, B and extension may be changed to anything but the values for the 
+#slice num (x) and uv voltage (y) must be at the end of NUM and UV respectively and before the underscore. Blue voltage (z) must be at the end of B, but before the extension.
 
 
 class informative_filename:
@@ -25,11 +24,10 @@ class informative_filename:
 
     #These properties do not have setters, so they cannot be changed in the code itself. However, in the GUI, there will be an option to change these values
     #when the program is run
-
-
     @property
     def slice_num(self):
         return self.extract_voltage(self.remove_extension(self.original_filename))[0]
+
     @property
     def UV_voltage(self):
         return self.extract_voltage(self.remove_extension(self.original_filename))[1]
@@ -66,6 +64,34 @@ class informative_filename:
                     break
         #Sets the member variables declared in the constructor 
         return tuple(EUB_values)
+
+    def insert_new_data( self, data_point, filename, data_type, extension):
+
+        def insert_at_end(num, orig_str):
+            future_index = len(orig_str)
+            for index, x in enumerate(orig_str):
+                if (x.isdigit()):
+                    future_index=index
+                    break
+            new_str = orig_str[0:future_index]+ str(num)
+            return new_str 
+        no_extension = self.remove_extension(filename)
+        split_filename = no_extension.split("-")
+        if (data_type == "slice_num"):
+            split_filename[0]=insert_at_end(data_point, split_filename[0])
+        elif(data_type=="UV"):
+            split_filename[1]=insert_at_end(data_point, split_filename[1])
+        elif(data_type=="blue"):
+            split_filename[2]=insert_at_end(data_point, split_filename[2])
+        elif(data_type=="time"):
+            split_filename[3]=insert_at_end(data_point, split_filename[3])
+        else:
+            print("please enter one of the following: 'data type', 'UV', 'blue', 'time'")
+        return ("_".join(split_filename))+extension
+
+            
+
+
 
 
 
