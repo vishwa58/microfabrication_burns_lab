@@ -26,11 +26,11 @@ class informative_filename:
     #when the program is run
     @property
     def slice_num(self):
-        return self.extract_voltage(self.remove_extension(self.original_filename))[0]
+        return self.extract_voltage(self.remove_extension(self.original_filename))[1] #THIS WILL NEED TO BE SWITCHED
 
     @property
     def UV_voltage(self):
-        return self.extract_voltage(self.remove_extension(self.original_filename))[1]
+        return self.extract_voltage(self.remove_extension(self.original_filename))[0] #SWITCH THIS ASAP
     @property
     def blue_voltage(self):
         return self.extract_voltage(self.remove_extension(self.original_filename))[2]
