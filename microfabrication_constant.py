@@ -6,3 +6,6 @@
 #To make it an absolute path make sure there is a "/" in the front and it starts at the root directory
 IMAGE_PATH = "/Users/vishwanathan/Desktop/UM-2/undergrad_research/microfabrication/Benchy-C/"
 
+IMAGE_SIZE_X = 1280
+IMAGE_SIZE_Y = 800
+
