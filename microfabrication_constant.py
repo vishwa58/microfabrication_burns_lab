@@ -4,8 +4,11 @@
 #This contant is the path to the folder containing the image slices. Change it to wherever your images are stored. 
 #Make sure this path is an absolute path that starts at your root directory and not a relative path that starts at the working directory.
 #To make it an absolute path make sure there is a "/" in the front and it starts at the root directory
-IMAGE_PATH = "/Users/vishwanathan/Desktop/UM-2/undergrad_research/microfabrication/Benchy-C/"
+IMAGE_PATH = "/Users/vishwanathan/Desktop/UM-2/undergrad_research/microfabrication/Benchy-C-smaller/"
 
 IMAGE_SIZE_X = 1280
 IMAGE_SIZE_Y = 800
+
+DISPLAY_TIME =50 #THIS TIME IS IN MILLISECONDS
+
 
